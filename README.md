@@ -1,171 +1,46 @@
-Flutter E-Commerce Application README
+Flutter To-Do List Application
 
-Overview
-This simple e-commerce app is built with Flutter and uses the Fake Store API to fetch dynamic data. It includes a splash screen, login screen, category dashboard, product details screen, and cart screen.
+A simple To-Do List application built with Flutter. It allows users to add, view, complete, edit, and delete tasks. Tasks are persisted locally using shared_preferences.
 
 Features
 
-• Splash screen with logo animation and timed navigation
-• Login screen with email/password form validation
-• Dashboard displaying product categories fetched from the API
-• Product listing within each category
-• Product details view with image, title, description, price, and Add to Cart button
-• Cart screen to view, edit quantities, remove items, and see total price
-• Named-route navigation
-• Basic error handling for API failures
-• Responsive UI for different screen sizes
+Add Tasks: Easily add new tasks to your list. View Tasks: See all your tasks in a clean, scrollable list. Mark as Completed: Check off tasks as you complete them. Edit Tasks: Modify the title of existing tasks. Delete Tasks: Remove tasks you no longer need. Persistence: Your tasks are saved locally and will be available even after closing and reopening the app. Filter Tasks: View all tasks, only active tasks, or only completed tasks. Sort Tasks: Tasks are automatically sorted with incomplete tasks appearing first, then by newest created within each status.
 
 Prerequisites
 
-• Flutter SDK installed (see flutter.dev for instructions)
-• Dart SDK (bundled with Flutter)
-• An IDE such as Android Studio, VS Code, or IntelliJ IDEA with Flutter plugin
-• A connected device or emulator
+Flutter SDK: Make sure you have Flutter installed. For installation instructions, see the Flutter official documentation. An editor like VS Code or Android Studio with the Flutter plugin. A connected device (Android/iOS) or an emulator/simulator.
 
-Setup and Installation
+How to Run the App
 
-1. Create a new Flutter project:
-   flutter create ecommerce\_app
-2. Navigate into the project folder:
-   cd ecommerce\_app
-3. Add dependencies in pubspec.yaml:
-   dependencies:
-   flutter:
-   sdk: flutter
-   http: latest
-   flutter\_spinkit: latest
-   shared\_preferences: latest
+Ensure Dependencies: This project uses the following Flutter packages: shared_preferences: For local data persistence. uuid: For generating unique IDs for tasks. Add these to your pubspec.yaml file if they are not already present:
 
-   # Any other UI libraries as needed
-4. Run flutter pub get to install packages.
+dependencies:
+  flutter:
+    sdk: flutter
+  shared_preferences: ^2.0.0  Use the latest version
+  uuid: ^4.0.0  Use the latest version
+Then, run flutter pub get in your project's root directory.
 
-Project Structure (lib folder)
+Save the Code: Copy the entire Dart code provided above. Save it into a file named main.dart inside the lib folder of your new Flutter project. (e.g., your_flutter_project/lib/main.dart). If you don't have a project, create one using flutter create your_todo_app_name.
 
-• main.dart
+Run the App: Open your terminal or command prompt. Navigate to the root directory of your Flutter project. Run the command: flutter run Select the device or emulator you want to run the app on when prompted.
 
-  • Entry point
-  • Defines named routes
-• screens/
+Code Structure (lib/main.dart)
 
-  • splash\_screen.dart
-  • login\_screen.dart
-  • dashboard\_screen.dart
-  • category\_products\_screen.dart
-  • product\_details\_screen.dart
-  • cart\_screen.dart
-• models/
+Task Class: A model class to define the structure of a task (id, title, completion status, creation date). It includes toJson and fromJson methods for persistence. TodoApp StatelessWidget: The root widget of the application, sets up MaterialApp. TodoListScreen StatefulWidget: The main screen of the app. Manages the list of tasks (_tasks). Handles loading tasks from and saving tasks to shared_preferences. Contains methods for adding, toggling completion, editing, and deleting tasks. Builds the UI, including the input field, add button, and the list of tasks. Includes filtering logic.
 
-  • product.dart
-  • category.dart
-• services/
+State Management
 
-  • api\_service.dart  (handles HTTP requests to Fake Store API)
-• widgets/
+The app uses Flutter's built-in setState mechanism for managing the state of the task list and UI updates.
 
-  • category\_card.dart
-  • product\_card.dart
-  • cart\_item\_tile.dart
-• utils/
+Persistence
 
-  • validators.dart  (email and password validation)
-  • constants.dart   (API base URL, route names, etc.)
-
-Screen Details
-Splash Screen
-
-• Displays app logo and name
-• Fade-in animation on logo
-• Timer of 3 seconds before navigating to login screen
-
-Login Screen
-
-• Text fields for email and password
-• Validation:
-
-  • Email must not be empty and must match email pattern
-  • Password must not be empty and meet minimum length
-• Login button:
-
-  • Validates form inputs
-  • On success, navigates to dashboard
-
-Dashboard Screen
-
-• Fetches category list from Fake Store API ([https://fakestoreapi.com/products/categories](https://fakestoreapi.com/products/categories))
-• Displays categories in a grid of cards
-• Tap on a category to navigate to category\_products\_screen
-
-Category Products Screen
-
-• Fetches products for selected category from API ([https://fakestoreapi.com/products/category/{category}](https://fakestoreapi.com/products/category/{category}))
-• Displays products in a grid
-• Each product card shows image, title, price
-• Tap on a product to navigate to product\_details\_screen
-
-Product Details Screen
-
-• Fetches detailed product data by ID ([https://fakestoreapi.com/products/{id}](https://fakestoreapi.com/products/{id}))
-• Shows:
-
-  • Large product image
-  • Title
-  • Description
-  • Price
-  • “Add to Cart” button adds item to local cart
-
-Cart Screen
-
-• Displays list of added cart items
-• Each item shows image, title, price, quantity controls ( + / – )
-• Remove icon to delete item
-• Calculates and displays total cart value
-• “Checkout” button (placeholder)
-
-API Service
-
-• Uses http package for GET requests
-• Methods:
-
-  • fetchCategories()
-  • fetchProductsByCategory(String category)
-  • fetchProductById(int id)
-• Error handling:
-
-  • On failure, show a Snackbar with error message
-
-Navigation
-
-• Use named routes defined in constants.dart:
-
-  • '/'
-  • '/login'
-  • '/dashboard'
-  • '/category-products'
-  • '/product-details'
-  • '/cart'
-
-Running the App
-
-1. Connect a device or start an emulator
-2. Run:
-   flutter run
+Task data is persisted locally using the shared_preferences package. Tasks are stored as a JSON string.
 
 Testing
 
-• Verify navigation between screens
-• Test form validation on login screen
-• Confirm categories and products load correctly
-• Test adding/removing items in the cart
-• Check total price calculation
-• Simulate API failure (e.g. disable network) and verify error handling
+The app should be tested on both iOS and Android physical devices and emulators/simulators. Verify that all functionalities (add, complete, edit, delete, persistence, filtering) work as expected. Check UI responsiveness on different screen sizes and orientations.
 
-Future Enhancements
+Potential Future Enhancements (Not Implemented in this version)
 
-• User registration and real authentication
-• Persistent user sessions
-• Checkout flow integration
-• Order history screen
-• Product search feature
-• Reviews and ratings
-• Improved animations and custom themes
-
+More sophisticated sorting options (e.g., by due date, manual reordering). Task priorities. Due dates and reminders. Cloud synchronization. Advanced UI animations and custom themes. Categorization of tasks.
